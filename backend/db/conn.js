@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const mongo_url = process.env.MONGO_URL;
+const mongo_url =
+  "mongodb+srv://mauricio:Mamaelinda1!@portfolio.svmwxzm.mongodb.net/?retryWrites=true&w=majority";
 
 async function main() {
   try {
