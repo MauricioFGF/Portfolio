@@ -4,7 +4,8 @@ const app = express();
 const http = require("http");
 const cookieParser = require("cookie-parser");
 const routes = require("./routes/router");
-const conn = require("./db/conn");
+const mongoose = require("mongoose");
+// const conn = require("./db/conn");
 
 app.use(cors());
 app.use(express.json());
@@ -14,8 +15,12 @@ app.use("/api", routes);
 
 const server = http.createServer(app);
 
-conn();
+const mongo_url =
+  "mongodb+srv://mauricio:Mamaelinda1!@portfolio.svmwxzm.mongodb.net/?retryWrites=true&w=majority";
 
-server.listen(5000, function () {
-  console.log("Servidor On!");
+mongoose.connect(mongo_url).then(() => {
+  console.log("Conectado ao DB");
+  server.listen(5000, () => {
+    console.log("Servidor On!");
+  });
 });
