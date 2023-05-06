@@ -12,6 +12,7 @@ import profile from "./assets/profile.svg";
 import portfolio1 from "./assets/portfolio1.jpg";
 import portfolio2 from "./assets/portfolio2.jpg";
 import portfolio3 from "./assets/portfolio3.jpg";
+import { getPortfolioById } from "./routes";
 
 const navItems = [
   { text: "Home", icon: "estate" },
@@ -132,7 +133,17 @@ function App() {
     return Math.round(years);
   };
 
+  const getPortfolio = async (id) => {
+    try {
+      const response = await getPortfolioById(id);
+      console.log("res", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   useEffect(() => {
+    getPortfolio(1);
     const themeButton = document.getElementById("theme-button");
 
     const selectedTheme = localStorage.getItem("selected-theme");
