@@ -12,8 +12,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/api", routes);
 
-conn().then(() => {
-  app.listen(3000, function () {
-    console.log("Servidor On!");
-  });
+const server = http.createServer(app);
+
+conn();
+
+server.listen(5000, function () {
+  console.log("Servidor On!");
 });
