@@ -1,11 +1,12 @@
 {
   "name": "portfolio-backend",
   "version": 2,
-  "public": true,
-  "build": {
-    "src": "app.js",
-    "use": "@vercel/node"
-  },
+  "builds": [
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "(.*)",
