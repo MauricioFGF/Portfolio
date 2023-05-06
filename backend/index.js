@@ -12,8 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/api", routes);
 
-conn();
-
-app.listen(3000, function () {
-  console.log("Servidor On!");
+conn().then(() => {
+  app.listen(3000, function () {
+    console.log("Servidor On!");
+  });
 });
