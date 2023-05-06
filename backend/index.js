@@ -15,9 +15,10 @@ app.use("/api", routes);
 
 const mongo_url = process.env.MONGO_URL;
 
-mongoose.connect(mongo_url).then(() => {
-  console.log("Conectado ao DB");
-  app.listen(5000, () => {
-    console.log("Servidor On!");
-  });
+// mongoose.connect(mongo_url).then(() => {
+//   console.log("Conectado ao DB");
+// });
+
+app.listen(5000, () => {
+  console.log("Servidor On!");
 });
