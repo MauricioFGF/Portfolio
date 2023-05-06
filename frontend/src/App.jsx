@@ -12,12 +12,6 @@ import profile from "./assets/profile.svg";
 import portfolio1 from "./assets/portfolio1.jpg";
 import portfolio2 from "./assets/portfolio2.jpg";
 import portfolio3 from "./assets/portfolio3.jpg";
-import { getPortfolioById } from "./routes";
-
-const getPortfolio = async (id) => {
-  const response = await getPortfolioById(id);
-  console.log("response", response);
-};
 
 const navItems = [
   { text: "Home", icon: "estate" },
@@ -139,7 +133,6 @@ function App() {
   };
 
   useEffect(() => {
-    getPortfolio(1);
     const themeButton = document.getElementById("theme-button");
 
     const selectedTheme = localStorage.getItem("selected-theme");
