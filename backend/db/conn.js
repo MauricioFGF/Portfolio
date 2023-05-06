@@ -5,7 +5,6 @@ const mongo_url = process.env.MONGO_URL;
 
 async function main() {
   try {
-    mongoose.set("strictQuery", true);
     await mongoose.connect(mongo_url);
     console.log("Conectado ao DB");
   } catch (error) {
