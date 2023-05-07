@@ -200,6 +200,7 @@
   color: #fff;
   padding: 1rem;
   border-radius: 0.5rem;
+  z-index: 4;
   position: relative;
   overflow: hidden;
 }
@@ -216,7 +217,6 @@
   left: 0;
   width: 180px;
   height: 180px;
-  background: var(--first-color);
   box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
   transition: 0.5s;
 }
@@ -234,11 +234,7 @@
   transform: translate(-50%, -75%);
   background: transparent;
 }
-.liquid::before {
-  border-radius: 45%;
-  background: rgba(20, 20, 20, 1);
-  animation: animate 5s linear infinite;
-}
+
 .liquid::after {
   border-radius: 40%;
   background: rgba(20, 20, 20, 0.5);
