@@ -1,3 +1,14 @@
+.infinite__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  margin: auto;
+}
+.loading__container {
+  width: 12rem;
+}
 .bg__effect {
   position: fixed;
   z-index: -1;
@@ -377,7 +388,7 @@
 .qualification__subtitle {
   display: inline-block;
   font-size: var(--small-font-size);
-  margin-bottom: var(--mb-1);
+  margin-bottom: var(--mb-0-5);
 }
 .qualification__calendar {
   font-size: var(--smaller-font-size);
@@ -430,6 +441,9 @@
 .swiper {
   width: 100%;
   height: 100%;
+}
+.swiper-wrapper {
+  align-items: center;
 }
 .swiper-slide {
   font-size: 18px;

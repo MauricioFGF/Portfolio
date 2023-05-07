@@ -9,10 +9,11 @@ import "swiper/css/navigation";
 import "./App.css";
 import me from "./assets/me.png";
 import cv from "./assets/Mauricio-Cv.pdf";
-import portfolio1 from "./assets/portfolio1.jpg";
-import portfolio2 from "./assets/portfolio2.jpg";
-import portfolio3 from "./assets/portfolio3.jpg";
+import tetris from "./assets/tetris.png";
+import img404 from "./assets/404.png";
+import moovie from "./assets/moovie.png";
 import bgEffect from "./assets/bgEffect.svg";
+import InfiniteLoading from "./components/loading";
 import { getPortfolioById } from "./routes";
 
 var options = {
@@ -37,22 +38,26 @@ const navItems = [
 ];
 
 const front = [
-  { text: "HTML", percentage: "100%" },
-  { text: "CSS", percentage: "100%" },
-  { text: "JavaScript", percentage: "100%" },
-  { text: "React", percentage: "100%" },
+  { text: "Vue", percentage: "100%" },
+  { text: "Angular", percentage: "100%" },
+  { text: "ReactJs", percentage: "100%" },
+  { text: "TypeScript", percentage: "100%" },
+  { text: "React Native", percentage: "100%" },
 ];
 
 const back = [
-  { text: "DB", percentage: "40%" },
-  { text: "Node", percentage: "64%" },
-  { text: "Firebase", percentage: "32%" },
-  { text: "Python", percentage: "78%" },
+  { text: "Node", percentage: "65%" },
+  { text: "MySQL", percentage: "60%" },
+  { text: "MongoDB", percentage: "60%" },
+  { text: "PostgreSQL", percentage: "60%" },
+  { text: "Python", percentage: "70%" },
 ];
 
 const design = [
-  { text: "Figma", percentage: "42%" },
-  { text: "Sketch", percentage: "15%" },
+  { text: "UX/UI", percentage: "70%" },
+  { text: "Figma", percentage: "70%" },
+  { text: "Sketch", percentage: "50%" },
+  { text: "Adobe XD", percentage: "50%" },
   { text: "Photoshop", percentage: "55%" },
 ];
 
@@ -62,6 +67,8 @@ const iconTheme = "uil-sun";
 function App() {
   const [accordion, setAccordion] = useState("front");
   const [qualification, setQualification] = useState("education");
+  const [portfolioData, setPortfolio] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const getCurrentTheme = () => {
     return document.body.classList.contains(darkTheme) ? "dark" : "light";
@@ -83,12 +90,9 @@ function App() {
   };
 
   const colorById = () => {
-    selectorTheme();
-    scrollHeader();
-    scrollUp();
-    const sections = document.querySelectorAll("section[id]");
+    const sections = document?.querySelectorAll("section[id]");
     const scrollY = window.scrollY;
-    sections.forEach((current) => {
+    sections?.forEach((current) => {
       const sectionHeight = current.offsetHeight;
       const sectionTop = current.offsetTop - 50;
       const sectionId = current.getAttribute("id");
@@ -96,11 +100,11 @@ function App() {
       if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
         document
           .querySelector(".nav__menu a[href*=" + sectionId + "]")
-          .classList.add("active-link");
+          ?.classList.add("active-link");
       } else {
         document
           .querySelector(".nav__menu a[href*=" + sectionId + "]")
-          .classList.remove("active-link");
+          ?.classList.remove("active-link");
       }
     });
   };
@@ -110,25 +114,25 @@ function App() {
     const selectedTheme = localStorage.getItem("selected-theme");
     const selectedIcon = localStorage.getItem("selected-icon");
     if (selectedTheme && themeButton) {
-      document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
+      document?.body?.classList[selectedTheme === "dark" ? "add" : "remove"](
         darkTheme
       );
-      themeButton.classList[selectedIcon === "uil-moon" ? "add" : "remove"](
+      themeButton?.classList[selectedIcon === "uil-moon" ? "add" : "remove"](
         iconTheme
       );
     }
   };
 
   const scrollHeader = () => {
-    const nav = document.getElementById("header");
-    if (window.scrollY >= 80) nav.classList.add("scroll-header");
-    else nav.classList.remove("scroll-header");
+    const nav = document?.getElementById("header");
+    if (window.scrollY >= 80) nav?.classList?.add("scroll-header");
+    else nav?.classList?.remove("scroll-header");
   };
 
   const scrollUp = () => {
-    const scrollTop = document.getElementById("scroll-up");
-    if (window.scrollY >= 560) scrollTop.classList.add("show-scroll");
-    else scrollTop.classList.remove("show-scroll");
+    const scrollTop = document?.getElementById("scroll-up");
+    if (window.scrollY >= 560) scrollTop?.classList?.add("show-scroll");
+    else scrollTop?.classList?.remove("show-scroll");
   };
 
   const changeAccordion = (value) => {
@@ -164,18 +168,32 @@ function App() {
 
   const getPortfolio = async (id) => {
     try {
+      setLoading(true);
       const response = await getPortfolioById(id);
-      console.log("res", response);
+      setPortfolio(response);
+      setLoading(false);
     } catch (error) {
       console.log("error", error);
     }
   };
 
+  const globalCalled = async () => {
+    scrollHeader();
+    scrollUp();
+    colorById();
+  };
+
   useEffect(() => {
+    selectorTheme();
     getPortfolio(1);
-    new Typed("#home_write", options);
-    window.addEventListener("scroll", colorById);
-  });
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      new Typed("#home_write", options);
+      window.addEventListener("scroll", globalCalled);
+    }
+  }, [loading]);
 
   return (
     <>
@@ -218,538 +236,499 @@ function App() {
         </nav>
       </header>
 
-      <main className="main">
-        <section className="home section" id="home">
-          <div className="home__container container grid">
-            <div className="home__content grid">
-              <div className="home__social animate__animated animate__backInDown animate__slower">
-                <a
-                  href="https://www.linkedin.com/in/mauricio-guimar%C3%A3es-5312a41a6/"
-                  className="home__social-icon"
-                  target="__blank"
-                >
-                  <i className="uil uil-linkedin-alt"></i>
-                </a>
+      {loading ? (
+        <div className="infinite__loading">
+          <div className="loading__container">
+            <InfiniteLoading />
+            <h1>Carregando</h1>
+          </div>
+        </div>
+      ) : (
+        <main className="main">
+          <section className="home section" id="home">
+            <div className="home__container container grid">
+              <div className="home__content grid">
+                <div className="home__social animate__animated animate__backInDown animate__slower">
+                  <a
+                    href="https://www.linkedin.com/in/mauricio-guimar%C3%A3es-5312a41a6/"
+                    className="home__social-icon"
+                    target="__blank"
+                  >
+                    <i className="uil uil-linkedin-alt"></i>
+                  </a>
 
-                <a
-                  href="https://github.com/MauricioFGF"
-                  className="home__social-icon"
-                  target="__blank"
-                >
-                  <i className="uil uil-github-alt"></i>
-                </a>
+                  <a
+                    href="https://github.com/MauricioFGF"
+                    className="home__social-icon"
+                    target="__blank"
+                  >
+                    <i className="uil uil-github-alt"></i>
+                  </a>
 
-                <a
-                  href="https://wa.me/5581997670898"
-                  className="home__social-icon"
-                  target="__blank"
-                >
-                  <i className="uil uil-whatsapp"></i>
-                </a>
+                  <a
+                    href="https://wa.me/5581997670898"
+                    className="home__social-icon"
+                    target="__blank"
+                  >
+                    <i className="uil uil-whatsapp"></i>
+                  </a>
+                </div>
+
+                <div className="home__img home__blob animate__animated animate__fadeInRight animate__slow">
+                  <div className="liquid-blob"></div>
+                </div>
+
+                <div className="home__data animate__animated animate__fadeInLeft animate__faster">
+                  <h1 className="home__title">
+                    {portfolioData?.home?.title || "Olá, sou Mauricio"}
+                  </h1>
+                  <span className="home__subtitle" id="home_write" />
+                  <p className="home__description">
+                    {portfolioData?.home?.description ||
+                      "Experiência de alto nível em desenvolvimento web e mobile, produzindo trabalhos de qualidade."}
+                  </p>
+                  <a
+                    className="button button--flex"
+                    href="mailto:ferreiramauricio441@gmail.com"
+                  >
+                    <span className="span-button">Contato</span>
+                    <div className="liquid"></div>
+                    <i className="uil uil-message button__icon span-button"></i>
+                  </a>
+                </div>
               </div>
 
-              <div className="home__img home__blob animate__animated animate__fadeInRight animate__slow">
-                <div className="liquid-blob "></div>
+              <div className="home__scroll animate__animated animate__fadeInLeft animated__slower">
+                <a href="#sobre" className="home__scroll-button button--flex">
+                  <i className="uil uil-mouse-alt home__scroll-mouse "></i>
+                  <span className="home__scroll-name">Role para baixo</span>
+                  <i className="uil uil-arrow-down home__scroll-arrow "></i>
+                </a>
               </div>
+            </div>
+          </section>
 
-              <div className="home__data animate__animated animate__fadeInLeft animate__faster">
-                <h1 className="home__title">Olá, sou Mauricio</h1>
-                <span className="home__subtitle" id="home_write" />
-                <p className="home__description">
-                  Experiência de alto nível em desenvolvimento web e mobile,
-                  produzindo trabalhos de qualidade.
+          <section className="about section" id="sobre">
+            <h2 className="section__title">Sobre Mim</h2>
+            <span className="section__subtitle">Minha Introdução</span>
+
+            <div className="about__container container grid">
+              <img src={me} alt="" className="about__img" />
+              <div className="about__data">
+                <p className="about__description">
+                  {portfolioData?.about?.text ||
+                    "Desenvolvedor Front-End com sólida habilidade na resolução de problemas, desenvolvimento e prototipação de software. Busco continuamente compartilhar e adquirir novos conhecimentos, criar novas relações e impactar o mundo positivamente através da tecnologia."}
                 </p>
-                <a className="button button--flex" href="#">
-                  <span className="span-button">Contato</span>
-                  <div className="liquid"></div>
-                  <i className="uil uil-message button__icon span-button"></i>
-                </a>
-              </div>
-            </div>
-
-            <div className="home__scroll animate__animated animate__fadeInLeft animated__slower">
-              <a href="#sobre" className="home__scroll-button button--flex">
-                <i className="uil uil-mouse-alt home__scroll-mouse "></i>
-                <span className="home__scroll-name">Role para baixo</span>
-                <i className="uil uil-arrow-down home__scroll-arrow "></i>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="about section animate__animated" id="sobre">
-          <h2 className="section__title">Sobre Mim</h2>
-          <span className="section__subtitle">Minha Introdução</span>
-
-          <div className="about__container container grid">
-            <img src={me} alt="" className="about__img" />
-            <div className="about__data">
-              <p className="about__description">
-                Desenvolvedor Front-End com sólida habilidade na resolução de
-                problemas, desenvolvimento e prototipação de software. Busco
-                continuamente compartilhar e adquirir novos conhecimentos, criar
-                novas relações e impactar o mundo positivamente através da
-                tecnologia.
-              </p>
-              <div className="about__info">
-                <div>
-                  <span className="about__info-title">
-                    {getYearsExperience()}+
-                  </span>
-                  <span className="about__info-name">
-                    Anos de <br /> experiência
-                  </span>
+                <div className="about__info">
+                  <div>
+                    <span className="about__info-title">
+                      {getYearsExperience()}+
+                    </span>
+                    <span className="about__info-name">
+                      Anos de <br /> experiência
+                    </span>
+                  </div>
+                  <div>
+                    <span className="about__info-title">23+</span>
+                    <span className="about__info-name">
+                      Projetos <br /> desenvolvidos
+                    </span>
+                  </div>
+                  <div>
+                    <span className="about__info-title">2+</span>
+                    <span className="about__info-name">
+                      Empresas <br /> Trabalhadas
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="about__info-title">23+</span>
-                  <span className="about__info-name">
-                    Projetos <br /> desenvolvidos
-                  </span>
-                </div>
-                <div>
-                  <span className="about__info-title">2+</span>
-                  <span className="about__info-name">
-                    Empresas <br /> Trabalhadas
-                  </span>
+
+                <div className="about__buttons">
+                  <a download="" href={cv} className="button button--flex">
+                    <span className="span-button">Download CV</span>
+                    <div className="liquid"></div>
+                    <i className="uil uil-download-alt button__icon span-button "></i>
+                  </a>
                 </div>
               </div>
-
-              <div className="about__buttons">
-                <a download="" href={cv} className="button button--flex">
-                  <span className="span-button">Download CV</span>
-                  <div className="liquid"></div>
-                  <i className="uil uil-download-alt button__icon span-button "></i>
-                </a>
-              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="skills section" id="habilidades">
-          <h2 className="section__title">Habilidades</h2>
-          <span className="section__subtitle">Meu nível técnico</span>
+          <section className="skills section" id="habilidades">
+            <h2 className="section__title">Habilidades</h2>
+            <span className="section__subtitle">Meu nível técnico</span>
 
-          <div className="skills__container container grid">
-            <div>
-              <div
-                className={`skills__content ${
-                  accordion === "front" ? "skills__open" : "skills__close"
-                }`}
-              >
+            <div className="skills__container container grid">
+              <div>
                 <div
-                  className="skills__header"
-                  onClick={() => changeAccordion("front")}
+                  className={`skills__content ${
+                    accordion === "front" ? "skills__open" : "skills__close"
+                  }`}
                 >
-                  <i className="uil uil-brackets-curly skills__icon"></i>
+                  <div
+                    className="skills__header"
+                    onClick={() => changeAccordion("front")}
+                  >
+                    <i className="uil uil-brackets-curly skills__icon"></i>
 
-                  <div>
-                    <h1 className="skills__titles">Desenvolvedor front-end</h1>
-                    <span className="skills__subtitle">
-                      Mais de {getYearsExperience()} anos{" "}
-                    </span>
+                    <div>
+                      <h1 className="skills__titles">
+                        Desenvolvedor front-end
+                      </h1>
+                      <span className="skills__subtitle">
+                        Mais de {getYearsExperience()} anos{" "}
+                      </span>
+                    </div>
+
+                    <i className="uil uil-angle-down skills__arrow "></i>
                   </div>
 
-                  <i className="uil uil-angle-down skills__arrow "></i>
+                  <div className="skills__list grid">
+                    {front.map((item) => (
+                      <div key={item.text} className="skills__data">
+                        <div className="skills__titles">
+                          <h3 className="skills__name">{item.text}</h3>
+                          <span className="skills__number">
+                            {item.percentage}
+                          </span>
+                        </div>
+                        <div className="skills__bar">
+                          <span
+                            className="skills__percentage"
+                            style={{ width: item.percentage }}
+                          ></span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="skills__list grid">
-                  {front.map((item) => (
-                    <div key={item.text} className="skills__data">
-                      <div className="skills__titles">
-                        <h3 className="skills__name">{item.text}</h3>
-                        <span className="skills__number">
-                          {item.percentage}
-                        </span>
-                      </div>
-                      <div className="skills__bar">
-                        <span
-                          className="skills__percentage"
-                          style={{ width: item.percentage }}
-                        ></span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div
-                className={`skills__content ${
-                  accordion === "back" ? "skills__open" : "skills__close"
-                }`}
-              >
                 <div
-                  className="skills__header"
-                  onClick={() => changeAccordion("back")}
+                  className={`skills__content ${
+                    accordion === "back" ? "skills__open" : "skills__close"
+                  }`}
                 >
-                  <i className="uil uil-server-network skills__icon "></i>
+                  <div
+                    className="skills__header"
+                    onClick={() => changeAccordion("back")}
+                  >
+                    <i className="uil uil-server-network skills__icon "></i>
 
-                  <div>
-                    <h1 className="skills__titles">Desenvolvedor back-end</h1>
-                    <span className="skills__subtitle">
-                      Mais de {getYearsExperience()} anos{" "}
-                    </span>
+                    <div>
+                      <h1 className="skills__titles">Desenvolvedor back-end</h1>
+                      <span className="skills__subtitle">
+                        Mais de {getYearsExperience()} anos{" "}
+                      </span>
+                    </div>
+
+                    <i className="uil uil-angle-down skills__arrow "></i>
                   </div>
 
-                  <i className="uil uil-angle-down skills__arrow "></i>
-                </div>
-
-                <div className="skills__list grid">
-                  {back.map((item) => (
-                    <div key={item.text} className="skills__data">
-                      <div className="skills__titles">
-                        <h3 className="skills__name">{item.text}</h3>
-                        <span className="skills__number">
-                          {item.percentage}
-                        </span>
+                  <div className="skills__list grid">
+                    {back.map((item) => (
+                      <div key={item.text} className="skills__data">
+                        <div className="skills__titles">
+                          <h3 className="skills__name">{item.text}</h3>
+                          <span className="skills__number">
+                            {item.percentage}
+                          </span>
+                        </div>
+                        <div className="skills__bar">
+                          <span
+                            className="skills__percentage"
+                            style={{ width: item.percentage }}
+                          ></span>
+                        </div>
                       </div>
-                      <div className="skills__bar">
-                        <span
-                          className="skills__percentage"
-                          style={{ width: item.percentage }}
-                        ></span>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <div
-                className={`skills__content ${
-                  accordion === "design" ? "skills__open" : "skills__close"
-                }`}
-              >
+              <div>
                 <div
-                  className="skills__header"
-                  onClick={() => changeAccordion("design")}
+                  className={`skills__content ${
+                    accordion === "design" ? "skills__open" : "skills__close"
+                  }`}
                 >
-                  <i className="uil uil-swatchbook skills__icon "></i>
+                  <div
+                    className="skills__header"
+                    onClick={() => changeAccordion("design")}
+                  >
+                    <i className="uil uil-swatchbook skills__icon "></i>
 
-                  <div>
-                    <h1 className="skills__titles">Designer</h1>
-                    <span className="skills__subtitle">
-                      Mais de {getYearsExperience()} anos{" "}
-                    </span>
+                    <div>
+                      <h1 className="skills__titles">Designer</h1>
+                      <span className="skills__subtitle">
+                        Mais de {getYearsExperience()} anos{" "}
+                      </span>
+                    </div>
+
+                    <i className="uil uil-angle-down skills__arrow "></i>
                   </div>
 
-                  <i className="uil uil-angle-down skills__arrow "></i>
-                </div>
-
-                <div className="skills__list grid">
-                  {design.map((item) => (
-                    <div key={item.text} className="skills__data">
-                      <div className="skills__titles">
-                        <h3 className="skills__name">{item.text}</h3>
-                        <span className="skills__number">
-                          {item.percentage}
-                        </span>
+                  <div className="skills__list grid">
+                    {design.map((item) => (
+                      <div key={item.text} className="skills__data">
+                        <div className="skills__titles">
+                          <h3 className="skills__name">{item.text}</h3>
+                          <span className="skills__number">
+                            {item.percentage}
+                          </span>
+                        </div>
+                        <div className="skills__bar">
+                          <span
+                            className="skills__percentage"
+                            style={{ width: item.percentage }}
+                          ></span>
+                        </div>
                       </div>
-                      <div className="skills__bar">
-                        <span
-                          className="skills__percentage"
-                          style={{ width: item.percentage }}
-                        ></span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="qualification section" id="qualificações">
+            <h2 className="section__title">Qualificações</h2>
+            <span className="section__subtitle">Minha jornada </span>
+
+            <div className="qualification__container container">
+              <div className="qualification__tabs">
+                <div
+                  className={`qualification__button button--flex ${
+                    qualification === "education" && "qualification__active"
+                  }`}
+                  onClick={() => changeQualification("education")}
+                >
+                  <i className="uil uil-graduation-cap qualification__icon"></i>
+                  Acadêmica
+                </div>
+                <div
+                  className={`qualification__button button--flex ${
+                    qualification === "work" && "qualification__active"
+                  }`}
+                  onClick={() => changeQualification("work")}
+                >
+                  <i className="uil uil-briefcase-alt qualification__icon"></i>
+                  Profissional
+                </div>
+              </div>
+
+              <div className="qualification__sections">
+                <div
+                  className={`qualification__content ${
+                    qualification === "education" && "qualification__active"
+                  }`}
+                  data-content
+                  id="education"
+                >
+                  <div className="qualification__data">
+                    <div>
+                      <h3 className="qualification__title">
+                        Descomplica - Ciência da Computação
+                      </h3>
+                      <span className="qualification__subtitle">
+                        Brasil - Universidade
+                      </span>
+                      <div className="qualification__calendar">
+                        <i className="uil uil-calendar-alt calendar "></i>
+                        2023 - Atualmente
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="qualification section" id="qualificações">
-          <h2 className="section__title">Qualificações</h2>
-          <span className="section__subtitle">Minha jornada </span>
-
-          <div className="qualification__container container">
-            <div className="qualification__tabs">
-              <div
-                className={`qualification__button button--flex ${
-                  qualification === "education" && "qualification__active"
-                }`}
-                onClick={() => changeQualification("education")}
-              >
-                <i className="uil uil-graduation-cap qualification__icon"></i>
-                Acadêmica
-              </div>
-              <div
-                className={`qualification__button button--flex ${
-                  qualification === "work" && "qualification__active"
-                }`}
-                onClick={() => changeQualification("work")}
-              >
-                <i className="uil uil-briefcase-alt qualification__icon"></i>
-                Profissional
-              </div>
-            </div>
-
-            <div className="qualification__sections">
-              <div
-                className={`qualification__content ${
-                  qualification === "education" && "qualification__active"
-                }`}
-                data-content
-                id="education"
-              >
-                <div className="qualification__data">
-                  <div>
-                    <h3 className="qualification__title">
-                      1 Computer Enginner
-                    </h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                    <div>
+                      <span className="qualification__rounder"></span>
+                      <span className="qualification__line"></span>
                     </div>
                   </div>
 
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    <span className="qualification__line"></span>
-                  </div>
-                </div>
+                  <div className="qualification__data">
+                    <div></div>
 
-                <div className="qualification__data">
-                  <div></div>
+                    <div>
+                      <span className="qualification__rounder"></span>
+                      {/* <span className="qualification__line"></span> */}
+                    </div>
 
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    <span className="qualification__line"></span>
-                  </div>
-
-                  <div>
-                    <h3 className="qualification__title">
-                      2 Computer Enginner
-                    </h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                    <div>
+                      <h3 className="qualification__title">
+                        UFPE - Sistemas de Informação
+                      </h3>
+                      <span className="qualification__subtitle">
+                        Brasil - Universidade
+                      </span>
+                      <div className="qualification__calendar">
+                        <i className="uil uil-calendar-alt calendar "></i>
+                        2019 - 2023
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="qualification__data">
-                  <div>
-                    <h3 className="qualification__title">
-                      3 Computer Enginner
-                    </h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                <div
+                  className={`qualification__content ${
+                    qualification === "work" && "qualification__active"
+                  }`}
+                  data-content
+                  id="work"
+                >
+                  {/* quali 1 */}
+                  <div className="qualification__data">
+                    <div>
+                      <h3 className="qualification__title">
+                        Frontend Developer
+                      </h3>
+                      <span className="qualification__subtitle">
+                        Brasil - Insole
+                      </span>
+                      <div className="qualification__calendar">
+                        <i className="uil uil-calendar-alt calendar "></i>
+                        09/2021 - Atualmente
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="qualification__rounder"></span>
+                      <span className="qualification__line"></span>
                     </div>
                   </div>
 
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    <span className="qualification__line"></span>
-                  </div>
-                </div>
-
-                <div className="qualification__data">
-                  <div></div>
-
-                  <div>
-                    <span className="qualification__rounder"></span>
-                  </div>
-
-                  <div>
-                    <h3 className="qualification__title">
-                      4 Computer Enginner
-                    </h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                  {/* quali 3 */}
+                  <div className="qualification__data">
+                    <div></div>
+                    <div>
+                      <span className="qualification__rounder"></span>
+                      <span className="qualification__line"></span>
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              <div
-                className={`qualification__content ${
-                  qualification === "work" && "qualification__active"
-                }`}
-                data-content
-                id="work"
-              >
-                {/* quali 1 */}
-                <div className="qualification__data">
-                  <div>
-                    <h3 className="qualification__title">1 Tech Enginner</h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                    <div>
+                      <h3 className="qualification__title">
+                        Trainee Full Stack Developer
+                      </h3>
+                      <span className="qualification__subtitle">
+                        Brasil - Imagine Apps
+                      </span>
+                      <div className="qualification__calendar">
+                        <i className="uil uil-calendar-alt calendar "></i>
+                        08/2021 - 09/2021
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    <span className="qualification__line"></span>
-                  </div>
-                </div>
-                {/* quali 2 */}
-                <div className="qualification__data">
-                  <div></div>
-
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    <span className="qualification__line"></span>
-                  </div>
-
-                  <div>
-                    <h3 className="qualification__title">2 Tech Enginner</h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                  <div className="qualification__data">
+                    <div>
+                      <h3 className="qualification__title">Web Developer</h3>
+                      <span className="qualification__subtitle">
+                        Brasil - CITI
+                      </span>
+                      <div className="qualification__calendar">
+                        <i className="uil uil-calendar-alt calendar "></i>
+                        06/2021 - 07/2021
+                      </div>
                     </div>
-                  </div>
-                </div>
-                {/* quali 3 */}
-                <div className="qualification__data">
-                  <div>
-                    <h3 className="qualification__title">3 Tech Enginner</h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    <span className="qualification__line"></span>
-                  </div>
-                </div>
-                {/* quali 4 */}
-                <div className="qualification__data">
-                  <div></div>
-
-                  <div>
-                    <span className="qualification__rounder"></span>
-                    {/* <span className="qualification__line"></span> */}
-                  </div>
-
-                  <div>
-                    <h3 className="qualification__title">4 Tech Enginner</h3>
-                    <span className="qualification__subtitle">
-                      Peru - University
-                    </span>
-                    <div className="qualification__calendar">
-                      <i className="uil uil-calendar-alt calendar "></i>
-                      2009 - 2014
+                    <div>
+                      <span className="qualification__rounder"></span>
+                      {/* <span className="qualification__line"></span> */}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="portfolio section" id="projetos">
-          <h2 className="section__title">Projetos</h2>
-          <span className="section__subtitle">Trabalhos mais recentes</span>
+          <section className="portfolio section" id="projetos">
+            <h2 className="section__title">Projetos</h2>
+            <span className="section__subtitle">Trabalhos mais recentes</span>
 
-          <div className="portfolio__container container">
-            <div>
-              <Swiper
-                loop={true}
-                navigation={false}
-                pagination={{ clickable: true }}
-                mousewheel={true}
-                modules={[Mousewheel, Navigation, Pagination]}
-                className="mySwiper"
-              >
-                {/* 1 */}
-                <SwiperSlide>
-                  <div className="portfolio__content grid">
-                    <img src={portfolio1} alt="" className="portfolio__img" />
+            <div className="portfolio__container container">
+              <div>
+                <Swiper
+                  loop={true}
+                  navigation={false}
+                  pagination={{ clickable: true }}
+                  mousewheel={true}
+                  modules={[Mousewheel, Navigation, Pagination]}
+                  className="mySwiper"
+                >
+                  {/* 1 */}
+                  <SwiperSlide>
+                    <div className="portfolio__content grid">
+                      <img src={tetris} alt="" className="portfolio__img" />
 
-                    <div className="portfolio__data">
-                      <h3 className="portfolio__title">Modern Website</h3>
-                      <p className="portfolio__description">
-                        Website adaptable to all devices, with ui components and
-                        animated interactions.
-                      </p>
-                      <a
-                        href="#"
-                        className="button button--flex button--small portfolio__button"
-                      >
-                        <span className="span-button">Demo</span>
-                        <div className="liquid"></div>
-                        <i className="uil uil-arrow-right button__icon span-button"></i>
-                      </a>
+                      <div className="portfolio__data">
+                        <h3 className="portfolio__title">Tetris</h3>
+                        <p className="portfolio__description">
+                          Explorando o título que fez sucesso nos anos 90,
+                          tetris tem por objetivo montar um quebra-cabeça
+                          encaixando peças de diferentes formatos capazes de
+                          girar sobre o próprio eixo em apenas quatro posições
+                          diferentes.
+                        </p>
+                        <a
+                          href="https://mauriciofgf.github.io/Tetris/"
+                          target="__blank"
+                          className="button button--flex button--small portfolio__button"
+                        >
+                          <span className="span-button">Demo</span>
+                          <div className="liquid"></div>
+                          <i className="uil uil-arrow-right button__icon span-button"></i>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-                {/* 2 */}
-                <SwiperSlide>
-                  <div className="portfolio__content grid">
-                    <img src={portfolio2} alt="" className="portfolio__img" />
+                  </SwiperSlide>
+                  {/* 2 */}
+                  <SwiperSlide>
+                    <div className="portfolio__content grid">
+                      <img src={img404} alt="" className="portfolio__img" />
 
-                    <div className="portfolio__data">
-                      <h3 className="portfolio__title">Brand Design</h3>
-                      <p className="portfolio__description">
-                        Website adaptable to all devices, with ui components and
-                        animated interactions.
-                      </p>
-                      <a
-                        href="#"
-                        className="button button--flex button--small portfolio__button"
-                      >
-                        <span className="span-button">Demo</span>
-                        <div className="liquid"></div>
-                        <i className="uil uil-arrow-right button__icon span-button"></i>
-                      </a>
+                      <div className="portfolio__data">
+                        <h3 className="portfolio__title">Erro 404</h3>
+                        <p className="portfolio__description">
+                          Site responsivo para erro de requisição 404.
+                        </p>
+                        <a
+                          href="https://mauriciofgf.github.io/notfound-404/"
+                          target="__blank"
+                          className="button button--flex button--small portfolio__button"
+                        >
+                          <span className="span-button">Demo</span>
+                          <div className="liquid"></div>
+                          <i className="uil uil-arrow-right button__icon span-button"></i>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-                {/* 3 */}
-                <SwiperSlide>
-                  <div className="portfolio__content grid">
-                    <img src={portfolio3} alt="" className="portfolio__img" />
+                  </SwiperSlide>
+                  {/* 3 */}
+                  <SwiperSlide>
+                    <div className="portfolio__content grid">
+                      <img src={moovie} alt="" className="portfolio__img" />
 
-                    <div className="portfolio__data">
-                      <h3 className="portfolio__title">Design UX/UI</h3>
-                      <p className="portfolio__description">
-                        Website adaptable to all devices, with ui components and
-                        animated interactions.
-                      </p>
-                      <a
-                        href="#"
-                        className="button button--flex button--small portfolio__button"
-                      >
-                        <span className="span-button">Demo</span>
-                        <div className="liquid"></div>
-                        <i className="uil uil-arrow-right button__icon span-button"></i>
-                      </a>
+                      <div className="portfolio__data">
+                        <h3 className="portfolio__title">Filmes</h3>
+                        <p className="portfolio__description">
+                          Website responsivo que trás informações sobre os
+                          principais filmes da atualidade, como também antigos
+                          títulos aclamados pela mídia.
+                        </p>
+                        <a
+                          href="https://mauriciofgf.github.io/Insole/#/home"
+                          target="__blank"
+                          className="button button--flex button--small portfolio__button"
+                        >
+                          <span className="span-button">Demo</span>
+                          <div className="liquid"></div>
+                          <i className="uil uil-arrow-right button__icon span-button"></i>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              </Swiper>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      )}
 
       <footer className="footer">
         <div className="footer__bg">
