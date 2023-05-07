@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Mousewheel } from "swiper";
+import Typed from "typed.js";
 import moment from "moment";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -8,11 +9,24 @@ import "swiper/css/navigation";
 import "./App.css";
 import me from "./assets/me.png";
 import cv from "./assets/Mauricio-Cv.pdf";
-import profile from "./assets/profile.svg";
 import portfolio1 from "./assets/portfolio1.jpg";
 import portfolio2 from "./assets/portfolio2.jpg";
 import portfolio3 from "./assets/portfolio3.jpg";
+import bgEffect from "./assets/bgEffect.svg";
 import { getPortfolioById } from "./routes";
+
+var options = {
+  strings: [
+    "Frontend Developer",
+    "Web Developer",
+    "Mobile Developer",
+    "Problem Solver",
+  ],
+  typeSpeed: 120,
+  backSpeed: 50,
+  backDelay: 1500,
+  loop: true,
+};
 
 const navItems = [
   { text: "Home", icon: "estate" },
@@ -69,6 +83,7 @@ function App() {
   };
 
   const colorById = () => {
+    selectorTheme();
     scrollHeader();
     scrollUp();
     const sections = document.querySelectorAll("section[id]");
@@ -88,6 +103,20 @@ function App() {
           .classList.remove("active-link");
       }
     });
+  };
+
+  const selectorTheme = () => {
+    const themeButton = document.getElementById("theme-button");
+    const selectedTheme = localStorage.getItem("selected-theme");
+    const selectedIcon = localStorage.getItem("selected-icon");
+    if (selectedTheme && themeButton) {
+      document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
+        darkTheme
+      );
+      themeButton.classList[selectedIcon === "uil-moon" ? "add" : "remove"](
+        iconTheme
+      );
+    }
   };
 
   const scrollHeader = () => {
@@ -144,23 +173,13 @@ function App() {
 
   useEffect(() => {
     getPortfolio(1);
-    const themeButton = document.getElementById("theme-button");
-
-    const selectedTheme = localStorage.getItem("selected-theme");
-    const selectedIcon = localStorage.getItem("selected-icon");
-    if (selectedTheme && themeButton) {
-      document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
-        darkTheme
-      );
-      themeButton.classList[selectedIcon === "uil-moon" ? "add" : "remove"](
-        iconTheme
-      );
-    }
+    new Typed("#home_write", options);
     window.addEventListener("scroll", colorById);
-  }, []);
+  });
 
   return (
     <>
+      <img src={bgEffect} className="bg__effect" alt="" />
       <header className="header" id="header">
         <nav className="nav container">
           <a href="#" className="nav__logo">
@@ -203,7 +222,7 @@ function App() {
         <section className="home section" id="home">
           <div className="home__container container grid">
             <div className="home__content grid">
-              <div className="home__social">
+              <div className="home__social animate__animated animate__backInDown animate__slower">
                 <a
                   href="https://www.linkedin.com/in/mauricio-guimar%C3%A3es-5312a41a6/"
                   className="home__social-icon"
@@ -228,27 +247,27 @@ function App() {
                   <i className="uil uil-whatsapp"></i>
                 </a>
               </div>
-              <div className="home__img">
-                <img className="home__blob" src={profile}></img>
+
+              <div className="home__img home__blob animate__animated animate__fadeInRight animate__slow">
+                <div className="liquid-blob "></div>
               </div>
 
-              <div className="home__data">
+              <div className="home__data animate__animated animate__fadeInLeft animate__faster">
                 <h1 className="home__title">Olá, sou Mauricio</h1>
-                <h3 className="home__subtitle">Frontend developer</h3>
+                <span className="home__subtitle" id="home_write" />
                 <p className="home__description">
                   Experiência de alto nível em desenvolvimento web e mobile,
                   produzindo trabalhos de qualidade.
                 </p>
-                <a
-                  href="mailto:ferreiramauricio441@gmail.com"
-                  className="button button--flex"
-                >
-                  Contato <i className="uil uil-message button__icon"></i>
+                <a className="button button--flex" href="#">
+                  <span className="span-button">Contato</span>
+                  <div className="liquid"></div>
+                  <i className="uil uil-message button__icon span-button"></i>
                 </a>
               </div>
             </div>
 
-            <div className="home__scroll">
+            <div className="home__scroll animate__animated animate__fadeInLeft animated__slower">
               <a href="#sobre" className="home__scroll-button button--flex">
                 <i className="uil uil-mouse-alt home__scroll-mouse "></i>
                 <span className="home__scroll-name">Role para baixo</span>
@@ -258,7 +277,7 @@ function App() {
           </div>
         </section>
 
-        <section className="about section" id="sobre">
+        <section className="about section animate__animated" id="sobre">
           <h2 className="section__title">Sobre Mim</h2>
           <span className="section__subtitle">Minha Introdução</span>
 
@@ -297,8 +316,9 @@ function App() {
 
               <div className="about__buttons">
                 <a download="" href={cv} className="button button--flex">
-                  Download CV{" "}
-                  <i className="uil uil-download-alt button__icon "></i>
+                  <span className="span-button">Download CV</span>
+                  <div className="liquid"></div>
+                  <i className="uil uil-download-alt button__icon span-button "></i>
                 </a>
               </div>
             </div>
@@ -674,8 +694,9 @@ function App() {
                         href="#"
                         className="button button--flex button--small portfolio__button"
                       >
-                        Demo
-                        <i className="uil uil-arrow-right button__icon"></i>
+                        <span className="span-button">Demo</span>
+                        <div className="liquid"></div>
+                        <i className="uil uil-arrow-right button__icon span-button"></i>
                       </a>
                     </div>
                   </div>
@@ -695,8 +716,9 @@ function App() {
                         href="#"
                         className="button button--flex button--small portfolio__button"
                       >
-                        Demo
-                        <i className="uil uil-arrow-right button__icon"></i>
+                        <span className="span-button">Demo</span>
+                        <div className="liquid"></div>
+                        <i className="uil uil-arrow-right button__icon span-button"></i>
                       </a>
                     </div>
                   </div>
@@ -716,8 +738,9 @@ function App() {
                         href="#"
                         className="button button--flex button--small portfolio__button"
                       >
-                        Demo
-                        <i className="uil uil-arrow-right button__icon"></i>
+                        <span className="span-button">Demo</span>
+                        <div className="liquid"></div>
+                        <i className="uil uil-arrow-right button__icon span-button"></i>
                       </a>
                     </div>
                   </div>
