@@ -333,8 +333,13 @@
   margin-bottom: var(--mb-0-5);
 }
 .skills__name {
+  display: flex;
+  align-items: flex-end;
   font-size: var(--normal-font-size);
   font-weight: var(--font-medium);
+}
+.skills__img {
+  margin-right: var(--mb-0-5);
 }
 .skills__bar,
 .skills__percentage {
