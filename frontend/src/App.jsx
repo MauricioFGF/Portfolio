@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Qualifications from "./components/Qualifications";
-import InfiniteLoading from "./components/loading";
+import InfiniteLoading from "./components/Loading";
 import "./App.css";
 
 let options = {
