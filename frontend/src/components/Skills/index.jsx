@@ -96,7 +96,7 @@ function Skills(data) {
   };
 
   const getYearsExperience = () => {
-    const oldDate = moment("05/08/2021").format("DD/MM/YYYY");
+    const oldDate = moment("05/08/2021", "DD/MM/YYYY");
     const diff = moment().diff(oldDate);
     const years = moment.duration(diff).asYears();
     return Math.round(years);
@@ -134,14 +134,15 @@ function Skills(data) {
               {front.map((item) => (
                 <div key={item.text} className="skills__data">
                   <div className="skills__titles">
-                    <h3 className="skills__name">
+                    <p className="skills__name">
                       <img
                         src={item.img}
+                        alt="icon_stack_img"
                         className="skills__img"
                         width="25rem"
                       ></img>
                       {item.text}
-                    </h3>
+                    </p>
                     <span className="skills__number">{item.percentage}</span>
                   </div>
                   <div className="skills__bar">
@@ -180,14 +181,15 @@ function Skills(data) {
               {back.map((item) => (
                 <div key={item.text} className="skills__data">
                   <div className="skills__titles">
-                    <h3 className="skills__name">
+                    <p className="skills__name">
                       <img
                         src={item.img}
+                        alt="icon_stack_img"
                         className="skills__img"
                         width="25rem"
                       ></img>
                       {item.text}
-                    </h3>
+                    </p>
                     <span className="skills__number">{item.percentage}</span>
                   </div>
                   <div className="skills__bar">
@@ -228,14 +230,15 @@ function Skills(data) {
               {design.map((item) => (
                 <div key={item.text} className="skills__data">
                   <div className="skills__titles">
-                    <h3 className="skills__name">
+                    <p className="skills__name">
                       <img
                         src={item.img}
+                        alt="icon_stack_img"
                         className="skills__img"
                         width="25rem"
                       ></img>
                       {item.text}
-                    </h3>
+                    </p>
                     <span className="skills__number">{item.percentage}</span>
                   </div>
                   <div className="skills__bar">
@@ -255,11 +258,11 @@ function Skills(data) {
 }
 
 Skills.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
 };
 
 Skills.defaultProps = {
-  data: {},
+  data: [],
 };
 
 export default Skills;

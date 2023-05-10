@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import moment from "moment";
 import "./index.css";
-import me from "../../assets/me.png";
+import me from "../../assets/me.avif";
 import cv from "../../assets/Mauricio-Cv.pdf";
 
 function About(data) {
   const getYearsExperience = () => {
-    const oldDate = moment("05/08/2021").format("DD/MM/YYYY");
+    const oldDate = moment("05/08/2021", "DD/MM/YYYY");
     const diff = moment().diff(oldDate);
     const years = moment.duration(diff).asYears();
     return Math.round(years);
@@ -18,7 +18,7 @@ function About(data) {
       <span className="section__subtitle">Minha Introdução</span>
 
       <div className="about__container container grid">
-        <img src={me} alt="" className="about__img" />
+        <img src={me} alt="profile_img" className="about__img" />
         <div className="about__data">
           <p className="about__description">
             {data?.text ||
@@ -46,7 +46,12 @@ function About(data) {
           </div>
 
           <div className="about__buttons">
-            <a download="" href={cv} className="button button--flex">
+            <a
+              download=""
+              href={cv}
+              aria-label="Read to download CV"
+              className="button button--flex"
+            >
               <span className="span-button">Download CV</span>
               <div className="liquid"></div>
               <i className="uil uil-download-alt button__icon span-button "></i>

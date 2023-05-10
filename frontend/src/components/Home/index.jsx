@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import "./index.css";
 
 function Home(data) {
-  console.log(window.innerWidth);
   return (
     <section className="home section" id="home">
       <div className="home__container container grid">
@@ -12,6 +11,7 @@ function Home(data) {
               href="https://www.linkedin.com/in/mauricio-guimar%C3%A3es-5312a41a6/"
               className="home__social-icon"
               target="__blank"
+              aria-label="Read to my linkedin"
             >
               <i className="uil uil-linkedin-alt"></i>
             </a>
@@ -20,6 +20,7 @@ function Home(data) {
               href="https://github.com/MauricioFGF"
               className="home__social-icon"
               target="__blank"
+              aria-label="Read to my github"
             >
               <i className="uil uil-github-alt"></i>
             </a>
@@ -28,6 +29,7 @@ function Home(data) {
               href="https://wa.me/5581997670898"
               className="home__social-icon"
               target="__blank"
+              aria-label="Read to my whatsapp"
             >
               <i className="uil uil-whatsapp"></i>
             </a>
@@ -54,6 +56,7 @@ function Home(data) {
                   ? "mailto:ferreiramauricio441@gmail.com"
                   : "https://wa.me/5581997670898"
               }
+              aria-label="Contact-me"
             >
               <span className="span-button">Contato</span>
               <div className="liquid"></div>
@@ -63,7 +66,11 @@ function Home(data) {
         </div>
 
         <div className="home__scroll animate__animated animate__fadeInLeft animated__slower">
-          <a href="#sobre" className="home__scroll-button button--flex">
+          <a
+            href="#sobre"
+            aria-label="Scrolll down"
+            className="home__scroll-button button--flex"
+          >
             <i className="uil uil-mouse-alt home__scroll-mouse "></i>
             <span className="home__scroll-name">Role para baixo</span>
             <i className="uil uil-arrow-down home__scroll-arrow "></i>

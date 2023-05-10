@@ -47,7 +47,7 @@ function NavBar() {
   return (
     <header className="header" id="header">
       <nav className="nav container">
-        <a href="#" className="nav__logo">
+        <a href="#" aria-label="Read to start page" className="nav__logo">
           Mauricio
         </a>
 
@@ -55,7 +55,11 @@ function NavBar() {
           <ul className="nav__list grid">
             {navItems.map((item) => (
               <li className="nav__item" key={item.text} onClick={closeMenu}>
-                <a href={`#${item.text.toLowerCase()}`} className="nav__link">
+                <a
+                  href={`#${item.text.toLowerCase()}`}
+                  aria-label="Nav link in mobile screen"
+                  className="nav__link"
+                >
                   <i className={`uil uil-${item.icon} nav__icon`}></i>
                   {item.text}
                 </a>

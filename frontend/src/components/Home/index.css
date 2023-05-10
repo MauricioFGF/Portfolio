@@ -30,7 +30,7 @@
   background: var(--first-color);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   animation: liquid 8s linear infinite alternate;
-  background-image: url("../../assets/me-2.png");
+  background-image: url("../../assets/me-2.webp");
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;

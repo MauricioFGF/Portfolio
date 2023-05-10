@@ -13,17 +13,29 @@ function Footer(data) {
 
           <ul className="footer__links">
             <li>
-              <a href="#sobre" className="footer__link">
+              <a
+                href="#sobre"
+                aria-label="link to home area"
+                className="footer__link"
+              >
                 Sobre mim
               </a>
             </li>
             <li>
-              <a href="#habilidades" className="footer__link">
+              <a
+                href="#habilidades"
+                aria-label="link to habilidades area"
+                className="footer__link"
+              >
                 Habilidades
               </a>
             </li>
             <li>
-              <a href="#projetos" className="footer__link">
+              <a
+                href="#projetos"
+                aria-label="link to projetos area"
+                className="footer__link"
+              >
                 Projetos
               </a>
             </li>
@@ -34,6 +46,7 @@ function Footer(data) {
               href="https://www.linkedin.com/in/mauricio-guimar%C3%A3es-5312a41a6/"
               target="__blank"
               className="footer__social"
+              aria-label="Read to my linkedin"
             >
               <i className="uil uil-linkedin-alt"></i>
             </a>
@@ -41,6 +54,7 @@ function Footer(data) {
               href="https://github.com/MauricioFGF"
               target="__blank"
               className="footer__social"
+              aria-label="Read to my github"
             >
               <i className="uil uil-github-alt"></i>
             </a>
@@ -48,6 +62,7 @@ function Footer(data) {
               href="https://wa.me/5581997670898"
               target="__blank"
               className="footer__social"
+              aria-label="Read to my whatsapp"
             >
               <i className="uil uil-whatsapp"></i>
             </a>

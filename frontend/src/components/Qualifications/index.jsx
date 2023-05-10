@@ -1,6 +1,5 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
 import "./index.css";
 
 function Qualifications(data) {

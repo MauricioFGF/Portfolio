@@ -5,9 +5,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./index.css";
-import tetris from "../../assets/tetris.png";
-import img404 from "../../assets/404.png";
-import moovie from "../../assets/moovie.png";
+import tetris from "../../assets/tetris.avif";
+import img404 from "../../assets/404.avif";
+import moovie from "../../assets/moovie.avif";
 
 function Projects(data) {
   return (
@@ -28,7 +28,11 @@ function Projects(data) {
             {/* 1 */}
             <SwiperSlide>
               <div className="portfolio__content grid">
-                <img src={tetris} alt="" className="portfolio__img" />
+                <img
+                  src={tetris}
+                  alt="project_img"
+                  className="portfolio__img"
+                />
 
                 <div className="portfolio__data">
                   <h3 className="portfolio__title">Tetris</h3>
@@ -42,6 +46,7 @@ function Projects(data) {
                     href="https://mauriciofgf.github.io/Tetris/"
                     target="__blank"
                     className="button button--flex button--small portfolio__button"
+                    aria-label="Read to my tetris project"
                   >
                     <span className="span-button">Demo</span>
                     <div className="liquid"></div>
@@ -53,7 +58,11 @@ function Projects(data) {
             {/* 2 */}
             <SwiperSlide>
               <div className="portfolio__content grid">
-                <img src={img404} alt="" className="portfolio__img" />
+                <img
+                  src={img404}
+                  alt="project_img"
+                  className="portfolio__img"
+                />
 
                 <div className="portfolio__data">
                   <h3 className="portfolio__title">Erro 404</h3>
@@ -64,6 +73,7 @@ function Projects(data) {
                     href="https://mauriciofgf.github.io/notfound-404/"
                     target="__blank"
                     className="button button--flex button--small portfolio__button"
+                    aria-label="Read to my 404 page"
                   >
                     <span className="span-button">Demo</span>
                     <div className="liquid"></div>
@@ -75,7 +85,11 @@ function Projects(data) {
             {/* 3 */}
             <SwiperSlide>
               <div className="portfolio__content grid">
-                <img src={moovie} alt="" className="portfolio__img" />
+                <img
+                  src={moovie}
+                  alt="project_img"
+                  className="portfolio__img"
+                />
 
                 <div className="portfolio__data">
                   <h3 className="portfolio__title">Filmes</h3>
@@ -88,6 +102,7 @@ function Projects(data) {
                     href="https://mauriciofgf.github.io/Insole/#/home"
                     target="__blank"
                     className="button button--flex button--small portfolio__button"
+                    aria-label="Read to my film page"
                   >
                     <span className="span-button">Demo</span>
                     <div className="liquid"></div>
@@ -104,11 +119,11 @@ function Projects(data) {
 }
 
 Projects.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
 };
 
 Projects.defaultProps = {
-  data: {},
+  data: [],
 };
 
 export default Projects;

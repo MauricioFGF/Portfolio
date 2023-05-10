@@ -109,7 +109,7 @@ function App() {
 
   return (
     <>
-      <img src={bgEffect} className="bg__effect" alt="" />
+      <img src={bgEffect} className="bg__effect" alt="background" />
       <NavBar />
 
       {loading ? (
@@ -131,7 +131,12 @@ function App() {
 
       <Footer />
 
-      <a href="#" className="scrollup" id="scroll-up">
+      <a
+        href="#"
+        className="scrollup"
+        aria-label="Link to scroll up"
+        id="scroll-up"
+      >
         <i className="uil uil-arrow-up scrollup__icon"></i>
       </a>
     </>
