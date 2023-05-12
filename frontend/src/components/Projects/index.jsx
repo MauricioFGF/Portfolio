@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "./index.css";
 import tetris from "../../assets/tetris.avif";
 import img404 from "../../assets/404.avif";
-import moovie from "../../assets/moovie.avif";
+import halloween from "../../assets/halloween.png";
 
 function Projects(data) {
   return (
@@ -37,10 +37,7 @@ function Projects(data) {
                 <div className="portfolio__data">
                   <h3 className="portfolio__title">Tetris</h3>
                   <p className="portfolio__description">
-                    Explorando o título que fez sucesso nos anos 90, tetris tem
-                    por objetivo montar um quebra-cabeça encaixando peças de
-                    diferentes formatos capazes de girar sobre o próprio eixo em
-                    apenas quatro posições diferentes.
+                    Reedição do jogo Tetris
                   </p>
                   <a
                     href="https://mauriciofgf.github.io/Tetris/"
@@ -67,7 +64,7 @@ function Projects(data) {
                 <div className="portfolio__data">
                   <h3 className="portfolio__title">Erro 404</h3>
                   <p className="portfolio__description">
-                    Site responsivo para erro de requisição 404.
+                    Página responsiva para erro de requisição 404.
                   </p>
                   <a
                     href="https://mauriciofgf.github.io/notfound-404/"
@@ -86,17 +83,15 @@ function Projects(data) {
             <SwiperSlide>
               <div className="portfolio__content grid">
                 <img
-                  src={moovie}
+                  src={halloween}
                   alt="project_img"
                   className="portfolio__img"
                 />
 
                 <div className="portfolio__data">
-                  <h3 className="portfolio__title">Filmes</h3>
+                  <h3 className="portfolio__title">Halloween 💀</h3>
                   <p className="portfolio__description">
-                    Website responsivo que trás informações sobre os principais
-                    filmes da atualidade, como também antigos títulos aclamados
-                    pela mídia.
+                    Website responsivo de vendas com tema de halloween.
                   </p>
                   <a
                     href="https://mauriciofgf.github.io/Insole/#/home"

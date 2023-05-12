@@ -4,6 +4,12 @@
 .portfolio__content {
   padding: 0 1.5rem;
 }
+.portfolio__data {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+}
 .portfolio__img {
   width: 265px;
   border-radius: 0.5rem;
