@@ -68,7 +68,7 @@ function Footer(data) {
             </a>
           </div>
         </div>
-        <p className="footer__copy">&#169; Bedimcode. All right reserved</p>
+        <p className="footer__copy">&#169; MFGF. All right reserved</p>
       </div>
     </footer>
   );
