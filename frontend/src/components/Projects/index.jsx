@@ -94,7 +94,7 @@ function Projects(data) {
                     Website responsivo de vendas com tema de halloween.
                   </p>
                   <a
-                    href="https://mauriciofgf.github.io/Insole/#/home"
+                    href="https://halloween-three.vercel.app/"
                     target="__blank"
                     className="button button--flex button--small portfolio__button"
                     aria-label="Read to my film page"
