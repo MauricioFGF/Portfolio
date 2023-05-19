@@ -120,15 +120,13 @@ function Qualifications(data) {
               </div>
 
               <div>
-                <h3 className="qualification__title">
-                  Trainee Full Stack Developer
-                </h3>
+                <h3 className="qualification__title">Full Stack Developer</h3>
                 <span className="qualification__subtitle">
                   Brasil - Imagine Apps
                 </span>
                 <div className="qualification__calendar">
                   <i className="uil uil-calendar-alt calendar "></i>
-                  08/2021 - 09/2021
+                  01/2021 - 09/2021
                 </div>
               </div>
             </div>
@@ -139,7 +137,7 @@ function Qualifications(data) {
                 <span className="qualification__subtitle">Brasil - CITI</span>
                 <div className="qualification__calendar">
                   <i className="uil uil-calendar-alt calendar "></i>
-                  06/2021 - 07/2021
+                  07/2020 - 12/2020
                 </div>
               </div>
               <div>

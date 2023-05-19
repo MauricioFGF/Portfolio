@@ -96,7 +96,7 @@ function Skills(data) {
   };
 
   const getYearsExperience = () => {
-    const oldDate = moment("05/08/2021", "DD/MM/YYYY");
+    const oldDate = moment("05/07/2020", "DD/MM/YYYY");
     const diff = moment().diff(oldDate);
     const years = moment.duration(diff).asYears();
     return Math.round(years);
