@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./index.css";
 import tetris from "../../assets/tetris.avif";
-import img404 from "../../assets/404.avif";
+import airbnb from "../../assets/airbnb.avif";
 import halloween from "../../assets/halloween.png";
 
 function Projects(data) {
@@ -56,18 +56,18 @@ function Projects(data) {
             <SwiperSlide>
               <div className="portfolio__content grid">
                 <img
-                  src={img404}
+                  src={airbnb}
                   alt="project_img"
                   className="portfolio__img"
                 />
 
                 <div className="portfolio__data">
-                  <h3 className="portfolio__title">Erro 404</h3>
+                  <h3 className="portfolio__title">Airbnb</h3>
                   <p className="portfolio__description">
-                    Página responsiva para erro de requisição 404.
+                    Site baseado do airbnb de aluguel de imovél para viagens.
                   </p>
                   <a
-                    href="https://mauriciofgf.github.io/notfound-404/"
+                    href="https://airbnb-trip.vercel.app/"
                     target="__blank"
                     className="button button--flex button--small portfolio__button"
                     aria-label="Read to my 404 page"
