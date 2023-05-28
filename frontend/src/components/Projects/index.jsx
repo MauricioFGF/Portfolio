@@ -70,7 +70,7 @@ function Projects(data) {
                     href="https://airbnb-trip.vercel.app/"
                     target="__blank"
                     className="button button--flex button--small portfolio__button"
-                    aria-label="Read to my 404 page"
+                    aria-label="Read to my airbnb page"
                   >
                     <span className="span-button">Demo</span>
                     <div className="liquid"></div>
